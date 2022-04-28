@@ -45,8 +45,12 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/axios',
   ],
-
+  axios:{
+    baseURL: '10.100.90.24', // Used as fallback if no runtime config is provided
+    // proxy: true
+  },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

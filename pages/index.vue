@@ -8,14 +8,14 @@
     </div>
     <v-form v-if="checkForm" class="sign-form" v-model="valid">
       <v-text-field
-        v-model="firstname"
+        v-model="p_name"
         :rules="nameRules"
         :counter="10"
         label="ชื่อ"
         required
       ></v-text-field>
       <v-text-field
-        v-model="lastname"
+        v-model="p_lastname"
         :rules="nameRules"
         :counter="10"
         label="นามสกุล"
@@ -42,8 +42,12 @@ export default {
    data: () => ({
       valid: false,
       checkForm: false,
-      firstname: '',
-      lastname: '',
+      p_name: '',
+      p_lastname: '',
+      regis_date: '',
+      ip_addr: '',
+      browser: '',
+      device: '',
       nameRules: [
         v => !!v || '*Name is required',
         v => v.length <= 10 || 'Name must be less than 10 characters',
@@ -64,10 +68,13 @@ export default {
         try{
            if(this.valid == true){
               let fd = new FormData();
-              fd.append('firstname',this.firstname);
-              fd.append('lastname',this.lastname);
-            
-            // const response = await this.$axios.post('/api/save', fd) 
+              fd.append('p_name',this.p_name);
+              fd.append('p_lastname',this.p_lastname);
+              fd.append('regis_date',this.regis_date);
+              fd.append('ip_addr',this.ip_addr);
+              fd.append('browser',this.browser);
+              fd.append('device',this.device);            
+            // const response = await this.$axios.post('/api/for-king', fd) 
             // this.$swal.fire({
             //     icon: 'success',
             //     title: 'บันทึกสำเร็จ',
