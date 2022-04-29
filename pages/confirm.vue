@@ -1,26 +1,22 @@
 <template>
   <div class="confirm-page">
      <div class="image">
-       <!-- <SignImage/> -->
         <img src="~/assets/images/bg-page.jpg" />
-        <!-- <NuxtLink to="/"><img class="box-sign" src="~/assets/images/sign.jpg" /></NuxtLink>  -->
     </div>
-    <h2 class="mg-one">ด้วยเกล้าด้วยกระหม่อมขอเดชะ ข้าพระพุทธเจ้า</h2> 
-    <h3 class="mg-two">นางสาวสวิตตา ศรีจันทร์</h3> 
-    <p>ผู้ร่วมลงนามลำดับที่ : </p>
+    <h2 class="style-title">ด้วยเกล้าด้วยกระหม่อมขอเดชะ ข้าพระพุทธเจ้า</h2> 
+    <h3 class="style-name">{{item.p_name}} {{item.p_lastname}}</h3> 
+    <p class="style-number">ผู้ร่วมลงนามลำดับที่ : {{item.p_id}}</p>
     <div class="box-footer">
          <v-btn
-              color="warning"
-              dark
-              class="btn-home"
-             @click="backHome"
+            rounded
+            class="btn btn-home"
+            @click="backHome"
             >
               กลับหน้าหลัก
             </v-btn>
              <v-btn
-              color="warning"
-              dark
-              class="btn-print"
+              rounded
+              class="btn btn-print"
               @click="printDivContent"
             >
              พิมพ์คำถวายพระพร
@@ -34,30 +30,30 @@
 </template>
 
 <script>
-import SignImage from '~/components/SignImage.vue'
 export default {
-  components: { SignImage},
   name: 'IndexPage',
    data: () => ({
-      valid: false,
-      firstname: '',
-      lastname: '',
-      nameRules: [
-        v => !!v || 'Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
+      item:{
+        p_name: 'สวิตตา',
+        p_lastname: 'ศรีจันทร์',
+        p_id: '100',
+      }
     }),
-    methods: {
-      backHome () {
-          this.$router.push('/');
-      },
-      printDivContent () {
-        window.print()
-        // this.$refs.observer.reset()
-      },
+  created(){
+    this.getDetail()
+  },
+  methods: {
+    backHome () {
+        this.$router.push('/');
     },
-
- 
+    printDivContent () {
+      window.print()
+    },
+    getDetail: async function(){
+        // const response = await this.$axios.post('/api/company/get') 
+        // this.item = response
+    }
+  },
 }
 </script>
 <style scoped>
@@ -66,22 +62,27 @@ export default {
     position: relative;
   }
   .btn-home{
-      background-color: #0170c2!important;
-      color: white;
+    background-color: #0170c2!important;
+    color: white;
+    margin-right: 0.5rem;
+    font-weight: 300;
   }
    .btn-print{
-     background-color: white!important;
-      color: #0170c2!important;
-      border: 1px solid#0170c2!important;
+    background-color: white!important;
+    border: 1px solid #0170c2!important;
+    color: #0170c2;
+    font-weight: 400;
+   
   }
-  .mg-one{
-      margin-top: 2rem;
-      margin-bottom: 1rem;
+  .style-title{
+    font-weight: 400;
+    margin: 2rem 0 1rem 0;
   }
-  .mg-two{
-      margin-top: 2rem;
-      margin-bottom: 1rem;
+  .style-name{
+   margin: 2rem 0 1rem 0;
+   font-weight: 400;
   }
+  
   .box-footer{
     margin: 2rem 0;
   }

@@ -3,109 +3,163 @@
     <div class="image">
       <img src="~/assets/images/bg-page.jpg" />
       <div v-if="!checkForm" @click="signForm">
-        <img class="box-sign" src="~/assets/images/sign.jpg"/>
+        <img class="box-sign" src="~/assets/images/banner01.gif"/>
       </div>
     </div>
     <v-form v-if="checkForm" class="sign-form" v-model="valid">
       <v-text-field
         v-model="p_name"
-        :rules="nameRules"
+        :error-messages="nameErrors"
         :counter="10"
-        label="ชื่อ"
+        label="Name"
         required
+        @input="$v.p_name.$touch()"
+        @blur="$v.p_name.$touch()"
       ></v-text-field>
       <v-text-field
         v-model="p_lastname"
-        :rules="nameRules"
+        :error-messages="lastnameErrors"
         :counter="10"
-        label="นามสกุล"
+        label="Name"
         required
+        @input="$v.p_lastname.$touch()"
+        @blur="$v.p_lastname.$touch()"
       ></v-text-field>
-        <v-btn
-        class="mr-4"
-        @click="submit"
-      >
-        ลงนามถวายพระพร
-      </v-btn>
-      <v-btn @click="clear">
-        clear
-      </v-btn>
+      <div class="btn-submit" @click="submit">
+        <img src="~/assets/images/banner01.gif" />
+      </div>
     </v-form>
+    <!-- <div class="box-detail">
+      <h2 class="style-title">ด้วยเกล้าด้วยกระหม่อมขอเดชะ ข้าพระพุทธเจ้า</h2> 
+      <h3 class="style-name">{{item.p_name}} {{item.p_lastname}}</h3> 
+      <p class="style-number">ผู้ร่วมลงนามลำดับที่ : {{item.p_id}}</p>
+      <div class="box-footer">
+        <v-btn
+          rounded
+          class="btn btn-home"
+          @click="backHome"
+          >
+            กลับหน้าหลัก
+          </v-btn>
+          <v-btn
+            rounded
+            class="btn btn-print"
+            @click="printDivContent"
+          >
+          พิมพ์คำถวายพระพร
+        </v-btn>    
+      </div>
+    </div> -->
   </div> 
 </template>
 
 <script>
-// import SignImage from '~/components/SignImage.vue'
+import moment from 'moment'
+import { validationMixin } from 'vuelidate'
+import { required, maxLength} from 'vuelidate/lib/validators'
 export default {
-  // components: { SignImage},
+  mixins: [validationMixin],
   name: 'IndexPage',
-   data: () => ({
-      valid: false,
-      checkForm: false,
-      p_name: '',
-      p_lastname: '',
-      regis_date: '',
-      ip_addr: '',
-      browser: '',
-      device: '',
-      nameRules: [
-        v => !!v || '*Name is required',
-        v => v.length <= 10 || 'Name must be less than 10 characters',
-      ],
-    }),
+  validations: {
+    p_name: { required, maxLength: maxLength(10) },
+    p_lastname: { required, maxLength: maxLength(10) },
+  },
+  data: () => ({
+    valid: false,
+    checkForm: false,
+    name: '',
+    p_name: '',
+    p_lastname: '',
+    p_festival: 'forking',
+    regis_date: moment().format('YYYY-MM-DD HH:mm:ss'),
+    browser: '',
+    device: '',
+  }),
+    computed:{
+      nameErrors () {
+        const errors = []
+        if (!this.$v.p_name.$dirty) return errors
+        !this.$v.p_name.maxLength && errors.push('Name must be at most 10 characters long')
+        !this.$v.p_name.required && errors.push('Name is required.')
+        return errors
+      },
+       lastnameErrors () {
+        const errors = []
+        if (!this.$v.p_lastname.$dirty) return errors
+        !this.$v.p_lastname.maxLength && errors.push('Name must be at most 10 characters long')
+        !this.$v.p_lastname.required && errors.push('Name is required.')
+        return errors
+      },
+    },
+    created(){
+      this.getDeviceType();
+      this.getBrowserDetect();
+      this.$axios.setHeader('Content-Type', 'application/json', [
+        'post'
+      ])
+    },
     methods: {
-      // submit () {
-      //   console.log(this.valid);
-      //   if(this.valid == true){
-      //     console.log(this.firstname);
-      //     console.log(this.lastname);
-      //      this.$router.push('/confirm');
-      //   }else{
-      //     this.nameRules
-      //   }
-      // },
-      submit () {
-        try{
-           if(this.valid == true){
-              let fd = new FormData();
-              fd.append('p_name',this.p_name);
-              fd.append('p_lastname',this.p_lastname);
-              fd.append('regis_date',this.regis_date);
-              fd.append('ip_addr',this.ip_addr);
-              fd.append('browser',this.browser);
-              fd.append('device',this.device);            
-            // const response = await this.$axios.post('/api/for-king', fd) 
-            // this.$swal.fire({
-            //     icon: 'success',
-            //     title: 'บันทึกสำเร็จ',
-            //     text: 'ระบบได้ทำการบันทึกข้อมูลของคุณแล้ว'
-            // }).then( function(){
-            //     window.location.href = '/employee';
-            // });
-            console.log(fd);
-           this.$router.push('/confirm');
-          }else{
-            this.nameRules
+      submit: async function(){
+        if(this.p_name && this.p_lastname){
+          let fd = {
+            "name" : this.p_name,
+            "lastname" : this.p_lastname,
+            "p_festival" : this.p_festival,
+            "regis_date" : this.regis_date,
+            "browser" : this.browser,
+            "device" : this.device,
           }
-        }catch(err){
-            this.$swal.fire({
-                icon: 'error',
-                title: 'บันทึกไม่สำเร็จ',
-                text: 'มีข้อผิดพลาดที่ไม่คาดคิดเกิดขึ้น โปรดลองใหม่อีกครั้ง'
-            })
-            console.log(err);
-        };
+          const response = await this.$axios.$post('/api/for-king', fd) 
+
+          console.log(response);
+          // this.$router.push('/confirm');
+        }else{
+          this.$v.$touch()
+        }
       },
-      clear () {
-        this.firstname = ''
-        this.lastname = ''
-      },
+    
       signForm(v){
          this.checkForm = !this.checkForm;
       },
-    },
-
- 
+   
+      getBrowserDetect(){        
+        let userAgent = navigator.userAgent;
+        let browserName;   
+        if(userAgent.match(/chrome|chromium|crios/i)){
+          browserName = "chrome";
+        }else if(userAgent.match(/firefox|fxios/i)){
+          browserName = "firefox";
+        } else if(userAgent.match(/safari/i)){
+          browserName = "safari";
+        }else if(userAgent.match(/opr\//i)){
+          browserName = "opera";
+        } else if(userAgent.match(/edg/i)){
+          browserName = "edge";
+        }else{
+          browserName="No browser detection";
+        }
+        this.browser = browserName
+      },
+      
+      getDeviceType(){
+          let ua = navigator.userAgent;
+          let deviceName;
+          if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            deviceName = "tablet";
+          }else if( /Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)){
+            deviceName = "mobile";
+          }else{
+            deviceName = "desktop";
+          }
+          this.device = deviceName  
+      },
+      // backHome () {
+      //   this.$router.push('/');
+      // },
+      // printDivContent () {
+      //   window.print()
+      // },
+    }
 }
 </script>
 <style scoped>
@@ -122,9 +176,15 @@ export default {
     position: relative;
   }
   .sign-form{
-    /* border: 1px solid; */
     width: 700px;
     display: inline-block;
     padding: 1rem;
+  }
+  .btn-submit{
+    cursor: pointer;
+    display: inline-block;
+  }
+  ::v-deep .v-messages__message{
+    color: red!important;
   }
 </style>
