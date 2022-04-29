@@ -49,7 +49,7 @@ export default {
   ],
   axios:{
     baseURL: '10.100.90.24', // Used as fallback if no runtime config is provided
-    // proxy: true
+    // proxy: false
   },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
