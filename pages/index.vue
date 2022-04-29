@@ -1,10 +1,13 @@
 <template>
   <div class="page">
     <div class="image">
-      <img src="~/assets/images/bg-page.jpg" />
-      <div v-if="!checkForm" @click="signForm">
-        <img class="box-sign" src="~/assets/images/banner01.gif"/>
+      <div class="second-image">
+        <img class="w-100" src="~/assets/images/bg-page.jpg" />
+        <div v-if="!checkForm" @click="signForm">
+          <img class="box-sign" src="~/assets/images/banner01.gif"/>
+        </div>
       </div>
+    
     </div>
     <v-form v-if="checkForm && !checkSubmit" class="sign-form" v-model="valid">
       <v-text-field
@@ -31,12 +34,13 @@
     </v-form>
     <div v-if="checkSubmit"  class="box-detail">
       <h2 class="style-title">ด้วยเกล้าด้วยกระหม่อมขอเดชะ ข้าพระพุทธเจ้า</h2> 
-      <h3 class="style-name"></h3> 
-      <p class="style-number">ผู้ร่วมลงนามลำดับที่ : </p>
+      <h3 class="style-name">{{item.name}} {{item.lastname}}</h3> 
+      <p class="style-number">ผู้ร่วมลงนามลำดับที่ : {{item.counter}}</p>
       <div class="box-footer">
           <a href="https://www.cgd.go.th/">
             <v-btn
               rounded
+               large
               class="btn btn-home"
               >
               กลับหน้าหลัก
@@ -44,6 +48,7 @@
           </a>
           <v-btn
             rounded
+             large
             class="btn btn-print"
             @click="printDivContent"
           >
@@ -76,19 +81,24 @@ export default {
     regis_date: moment().format('YYYY-MM-DD HH:mm:ss'),
     browser: '',
     device: '',
+    item: {
+      name: '',
+      lastname: '',
+      counter: ''
+    }
   }),
     computed:{
       nameErrors () {
         const errors = []
         if (!this.$v.p_name.$dirty) return errors
-        !this.$v.p_name.maxLength && errors.push('Name must be at most 10 characters long')
+        // !this.$v.p_name.maxLength && errors.push('Name must be at most 10 characters long')
         !this.$v.p_name.required && errors.push('Name is required.')
         return errors
       },
       lastnameErrors () {
         const errors = []
         if (!this.$v.p_lastname.$dirty) return errors
-        !this.$v.p_lastname.maxLength && errors.push('Name must be at most 10 characters long')
+        // !this.$v.p_lastname.maxLength && errors.push('Name must be at most 10 characters long')
         !this.$v.p_lastname.required && errors.push('Name is required.')
         return errors
       },
@@ -113,7 +123,9 @@ export default {
             "device" : this.device,
           }
           const response = await this.$axios.$post('/api/for-king', fd) 
-          console.log(response);
+          this.item.name = response.data.name
+          this.item.lastname = response.data.lastname
+          this.item.counter = response.data.counter
         }else{
           this.$v.$touch()
         }
@@ -191,25 +203,32 @@ export default {
     color: red!important;
   }
    .btn-home{
-    background-color: #0170c2!important;
+    background-color: #7c4b0b!important;
     color: white;
     margin-right: 0.5rem;
     font-weight: 300;
   }
    .btn-print{
     background-color: white!important;
-    border: 1px solid #0170c2!important;
-    color: #0170c2;
+    border: 1px solid #7c4b0b!important;
+    color: #7c4b0b;
     font-weight: 400;
    
   }
   .style-title{
     font-weight: 400;
     margin: 2rem 0 1rem 0;
+    color: #5f4303;
   }
   .style-name{
    margin: 2rem 0 1rem 0;
    font-weight: 400;
+   color: #5f4303;
+  }
+
+  .style-number{
+    color: #5f4303;
+    font-size: 20px;
   }
   
   .box-footer{
@@ -224,8 +243,18 @@ export default {
    text-decoration: none;
   }
   @media only screen and (max-width: 600px) {
-    .image img{
+    .image .w-100{
       width: 100%;
     }
+    .box-sign{
+      position: relative;
+      cursor: pointer;
+      margin-left: auto;
+      margin-right: auto;
+      left: 0;
+      right: 0;
+      text-align: center;
+    }
+  
 }
 </style>

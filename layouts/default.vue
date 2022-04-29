@@ -49,6 +49,9 @@ export default {
     text-align: center;
     height: auto;
     min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   html{
    height: 100%;
