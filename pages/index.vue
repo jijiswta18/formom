@@ -6,7 +6,7 @@
         <img class="box-sign" src="~/assets/images/banner01.gif"/>
       </div>
     </div>
-    <v-form v-if="checkForm" class="sign-form" v-model="valid">
+    <v-form v-if="checkForm && !checkSubmit" class="sign-form" v-model="valid">
       <v-text-field
         v-model="p_name"
         :error-messages="nameErrors"
@@ -29,18 +29,19 @@
         <img src="~/assets/images/banner01.gif" />
       </div>
     </v-form>
-    <!-- <div class="box-detail">
+    <div v-if="checkSubmit"  class="box-detail">
       <h2 class="style-title">ด้วยเกล้าด้วยกระหม่อมขอเดชะ ข้าพระพุทธเจ้า</h2> 
-      <h3 class="style-name">{{item.p_name}} {{item.p_lastname}}</h3> 
-      <p class="style-number">ผู้ร่วมลงนามลำดับที่ : {{item.p_id}}</p>
+      <h3 class="style-name"></h3> 
+      <p class="style-number">ผู้ร่วมลงนามลำดับที่ : </p>
       <div class="box-footer">
-        <v-btn
-          rounded
-          class="btn btn-home"
-          @click="backHome"
-          >
-            กลับหน้าหลัก
-          </v-btn>
+          <a href="https://www.cgd.go.th/">
+            <v-btn
+              rounded
+              class="btn btn-home"
+              >
+              กลับหน้าหลัก
+            </v-btn>
+          </a>
           <v-btn
             rounded
             class="btn btn-print"
@@ -49,7 +50,7 @@
           พิมพ์คำถวายพระพร
         </v-btn>    
       </div>
-    </div> -->
+    </div>
   </div> 
 </template>
 
@@ -67,6 +68,7 @@ export default {
   data: () => ({
     valid: false,
     checkForm: false,
+    checkSubmit: false,
     name: '',
     p_name: '',
     p_lastname: '',
@@ -83,7 +85,7 @@ export default {
         !this.$v.p_name.required && errors.push('Name is required.')
         return errors
       },
-       lastnameErrors () {
+      lastnameErrors () {
         const errors = []
         if (!this.$v.p_lastname.$dirty) return errors
         !this.$v.p_lastname.maxLength && errors.push('Name must be at most 10 characters long')
@@ -101,6 +103,7 @@ export default {
     methods: {
       submit: async function(){
         if(this.p_name && this.p_lastname){
+          this.checkSubmit = true
           let fd = {
             "name" : this.p_name,
             "lastname" : this.p_lastname,
@@ -110,9 +113,7 @@ export default {
             "device" : this.device,
           }
           const response = await this.$axios.$post('/api/for-king', fd) 
-
           console.log(response);
-          // this.$router.push('/confirm');
         }else{
           this.$v.$touch()
         }
@@ -153,12 +154,9 @@ export default {
           }
           this.device = deviceName  
       },
-      // backHome () {
-      //   this.$router.push('/');
-      // },
-      // printDivContent () {
-      //   window.print()
-      // },
+      printDivContent () {
+        window.print()
+      },
     }
 }
 </script>
@@ -168,17 +166,22 @@ export default {
   }
   .box-sign{
     position: absolute;
-    bottom: 5px;
-    left: 42%;
+    bottom: 10px;
     cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
   }
   .image{
     position: relative;
   }
   .sign-form{
-    width: 700px;
+    max-width: 700px;
     display: inline-block;
     padding: 1rem;
+    width: 100%;
   }
   .btn-submit{
     cursor: pointer;
@@ -187,4 +190,42 @@ export default {
   ::v-deep .v-messages__message{
     color: red!important;
   }
+   .btn-home{
+    background-color: #0170c2!important;
+    color: white;
+    margin-right: 0.5rem;
+    font-weight: 300;
+  }
+   .btn-print{
+    background-color: white!important;
+    border: 1px solid #0170c2!important;
+    color: #0170c2;
+    font-weight: 400;
+   
+  }
+  .style-title{
+    font-weight: 400;
+    margin: 2rem 0 1rem 0;
+  }
+  .style-name{
+   margin: 2rem 0 1rem 0;
+   font-weight: 400;
+  }
+  
+  .box-footer{
+    margin: 2rem 0;
+  }
+  @media print {
+    .box-footer{
+      display: none;
+    }
+  }
+  a{
+   text-decoration: none;
+  }
+  @media only screen and (max-width: 600px) {
+    .image img{
+      width: 100%;
+    }
+}
 </style>
