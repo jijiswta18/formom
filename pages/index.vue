@@ -74,6 +74,8 @@ export default {
     valid: false,
     checkForm: false,
     checkSubmit: false,
+    ckFormat: false,
+    // checkFormat: false,
     name: '',
     p_name: '',
     p_lastname: '',
@@ -106,12 +108,14 @@ export default {
     created(){
       this.getDeviceType();
       this.getBrowserDetect();
-      this.$axios.setHeader('Content-Type', 'application/json', [
-        'post'
-      ])
+      console.log(this.checkFormat());
+      // this.$axios.setHeader('Content-Type', 'application/json', [
+      //   'post'
+      // ])
     },
     methods: {
       submit: async function(){
+        let format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
         if(this.p_name && this.p_lastname){
           this.checkSubmit = true
           let fd = {
@@ -128,9 +132,13 @@ export default {
           this.item.counter = response.data.counter
         }else{
           this.$v.$touch()
+          this.ckFormat = true
+          
         }
       },
-    
+      checkFormat(){
+      
+      },
       signForm(v){
          this.checkForm = !this.checkForm;
       },
