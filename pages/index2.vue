@@ -9,34 +9,36 @@
       </div>
     
     </div>
-    <v-form 
-      ref="form" 
-      lazy-validation 
-      v-if="checkForm && !checkSubmit"  
-      v-model="valid"
-      class="sign-form"
-    >
+    <v-form  ref="form" lazy-validation v-if="checkForm && !checkSubmit" class="sign-form" v-model="valid">
         <v-text-field
-          v-model="p_name"
+          v-model="name"
+          :counter="10"
           :rules="nameRules"
-          label="ชิ้อ"
+          label="Name"
           required
-          thai_engLanguage
         ></v-text-field>
 
-          <v-text-field
-          v-model="p_lastname"
-          :rules="lastnameRules"
-          label="นามสกุล"
-          required
-          thai_engLanguage
-        ></v-text-field>
-    
+      <v-text-field
+        v-model="p_name"
+        :error-messages="nameErrors"
+        label="ชื่อ"
+        required
+        @input="$v.p_name.$touch()"
+        @blur="$v.p_name.$touch()"
+      ></v-text-field>
+      <v-text-field
+        v-model="p_lastname"
+        :error-messages="lastnameErrors"
+        label="นามสกุล"
+        required
+        @input="$v.p_lastname.$touch()"
+        @blur="$v.p_lastname.$touch()"
+      ></v-text-field>
       <div class="btn-submit">
-        <img src="~/assets/images/banner01.gif"  @click="submit"/>
+        <img src="~/assets/images/banner01.gif" @click="submit"/>
       </div>
     </v-form>
-    <div v-if="checkSubmit" class="box-detail">
+    <div v-if="checkSubmit"  class="box-detail">
       <h2 class="style-title">ด้วยเกล้าด้วยกระหม่อมขอเดชะ ข้าพระพุทธเจ้า</h2> 
       <div class="style-xs">
         <h2>ด้วยเกล้าด้วยกระหม่อมขอเดชะ</h2> 
@@ -69,23 +71,24 @@
 
 <script>
 import moment from 'moment'
+import { validationMixin } from 'vuelidate'
+import { required, maxLength} from 'vuelidate/lib/validators'
 export default {
+  mixins: [validationMixin],
   name: 'IndexPage',
+  validations: {
+    // p_name: { required, thai_engLanguage },
+    // p_lastname: { required, thai_engLanguage },
+    p_name: { required, maxLength: maxLength(10)},
+    p_lastname: { required, maxLength: maxLength(10)},
+  },
   data: () => ({
-    valid: true,
+    valid: false,
     checkForm: false,
     checkSubmit: false,
+    name: '',
     p_name: '',
-    nameRules: [
-      v => !!v || 'กรุณากรอกข้อมูล',
-      v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ`
-    ],
     p_lastname: '',
-    lastname: '',
-      lastnameRules: [
-      v => !!v || 'กรุณากรอกข้อมูล',
-      v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ`
-    ],
     p_festival: 'forking',
     regis_date: moment().format('YYYY-MM-DD HH:mm:ss'),
     browser: '',
@@ -96,31 +99,49 @@ export default {
       counter: ''
     }
   }),
+    computed:{
+      nameErrors () {
+        const errors = []
+        if (!this.$v.p_name.$dirty) return errors
+        !this.$v.p_name.maxLength && errors.push('Name must be at most 10 characters long')
+          !this.$v.p_name.required && errors.push('กรุณากรอกข้อมูล')
+        return errors
+      },
+      lastnameErrors () {
+        const errors = []
+        if (!this.$v.p_lastname.$dirty) return errors
+        !this.$v.p_lastname.maxLength && errors.push('Name must be at most 10 characters long')
+        !this.$v.p_lastname.required && errors.push('กรุณากรอกข้อมูล')
+        return errors
+      },
+    },
     created(){
       this.getDeviceType();
       this.getBrowserDetect();
-      console.log(this.valid);
+      // this.$axios.setHeader('Content-Type', 'application/json', [
+      //   'post'
+      // ])
     },
     methods: {
       submit: async function(){
-      
-        if(this.p_name && this.p_lastname && this.valid){
-          this.checkSubmit = true
-          let fd = {
-            "name" : this.p_name,
-            "lastname" : this.p_lastname,
-            "p_festival" : this.p_festival,
-            "regis_date" : this.regis_date,
-            "browser" : this.browser,
-            "device" : this.device,
-          }
-          const response = await this.$axios.$post('/api/for-king', fd) 
-          this.item.name = response.data.name
-          this.item.lastname = response.data.lastname
-          this.item.counter = response.data.counter
-        }else{
-          this.$refs.form.validate()
-        }
+        //  this.$v.$touch()
+        // if(!this.$v.$touch()) {
+        //       this.checkSubmit = true
+        //       let fd = {
+        //         "name" : this.p_name,
+        //         "lastname" : this.p_lastname,
+        //         "p_festival" : this.p_festival,
+        //         "regis_date" : this.regis_date,
+        //         "browser" : this.browser,
+        //         "device" : this.device,
+        //       }
+        //       // const response = await this.$axios.$post('/api/for-king', fd) 
+        //       // this.item.name = response.data.name
+        //       // this.item.lastname = response.data.lastname
+        //       // this.item.counter = response.data.counter
+        // }else{
+        //   this.$v.$touch()
+        // }
       },
       signForm(v){
          this.checkForm = !this.checkForm;

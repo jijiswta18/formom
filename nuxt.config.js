@@ -6,15 +6,14 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - form',
-    title: 'form',
+    title: 'Forking',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'ลงนามถวายพระพรออนไลน์ฉัตรมงคล วันที่ 5 เมษายน 2565 | กรมบัญชีกลาง' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
@@ -48,7 +47,7 @@ export default {
     '@nuxtjs/axios',
   ],
   axios:{
-    baseURL: 'http://10.100.90.24/', // Used as fallback if no runtime config is provided
+    baseURL: 'https://forking.cgd.go.th/', // Used as fallback if no runtime config is provided
     // proxy: false
   },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
