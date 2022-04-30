@@ -1,19 +1,20 @@
 import colors from 'vuetify/es5/util/colors'
-
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Forking',
+    title: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันฉัตรมงคล วันที่ 4 พฤษภาคม 2565 | กรมบัญชีกลาง',
     htmlAttrs: {
       lang: 'en'
     },
+
+
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'ลงนามถวายพระพรออนไลน์ฉัตรมงคล วันที่ 5 เมษายน 2565 | กรมบัญชีกลาง' },
+      { hid: 'og-description', name: 'description', content: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันฉัตรมงคล วันที่ 4 พฤษภาคม 2565 | กรมบัญชีกลาง' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [

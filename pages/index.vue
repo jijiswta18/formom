@@ -19,7 +19,7 @@
         <v-text-field
           v-model="p_name"
           :rules="nameRules"
-          label="ชิ้อ"
+          label="ชื่อ"
           required
           thai_engLanguage
         ></v-text-field>
@@ -78,13 +78,15 @@ export default {
     p_name: '',
     nameRules: [
       v => !!v || 'กรุณากรอกข้อมูล',
-      v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ`
+       v => (v && v.length <= 30) || 'ห้ามกรอกเกิน 30 ตัวอักษร',
+      v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ เเละตัวเลข`
     ],
     p_lastname: '',
     lastname: '',
       lastnameRules: [
       v => !!v || 'กรุณากรอกข้อมูล',
-      v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ`
+      v => (v && v.length <= 30) || 'ห้ามกรอกเกิน 30 ตัวอักษร',
+      v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ เเละตัวเลข`
     ],
     p_festival: 'forking',
     regis_date: moment().format('YYYY-MM-DD HH:mm:ss'),
@@ -119,6 +121,7 @@ export default {
           this.item.lastname = response.data.lastname
           this.item.counter = response.data.counter
         }else{
+          console.log(this.valid);
           this.$refs.form.validate()
         }
       },
@@ -271,6 +274,16 @@ export default {
     }
     .style-xs h2{
      font-weight: 400;
+    }
+  }
+   @media only screen and (max-width: 600px) {
+    .btn-print{
+      display: none;
+    }
+   }
+    @media only screen and (max-width: 960px) {
+    .btn-print{
+      display: none;
     }
   }
 </style>
