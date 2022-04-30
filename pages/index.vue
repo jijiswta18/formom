@@ -22,6 +22,7 @@
           label="ชื่อ"
           required
           thai_engLanguage
+          maxlength="30"
         ></v-text-field>
 
           <v-text-field
@@ -30,6 +31,7 @@
           label="นามสกุล"
           required
           thai_engLanguage
+          maxlength="30"
         ></v-text-field>
     
       <div class="btn-submit">
@@ -78,14 +80,14 @@ export default {
     p_name: '',
     nameRules: [
       v => !!v || 'กรุณากรอกข้อมูล',
-       v => (v && v.length <= 30) || 'ห้ามกรอกเกิน 30 ตัวอักษร',
+      //  v => (v && v.length <= 30) || 'ห้ามกรอกเกิน 30 ตัวอักษร',
       v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ เเละตัวเลข`
     ],
     p_lastname: '',
     lastname: '',
       lastnameRules: [
       v => !!v || 'กรุณากรอกข้อมูล',
-      v => (v && v.length <= 30) || 'ห้ามกรอกเกิน 30 ตัวอักษร',
+      // v => (v && v.length <= 30) || 'ห้ามกรอกเกิน 30 ตัวอักษร',
       v =>/^[a-zA-Zก-ฮะ-์\s]+$/.test(v) ||` ห้ามกรอกอักขระพิเศษ เเละตัวเลข`
     ],
     p_festival: 'forking',
@@ -101,7 +103,6 @@ export default {
     created(){
       this.getDeviceType();
       this.getBrowserDetect();
-      console.log(this.valid);
     },
     methods: {
       submit: async function(){
@@ -121,7 +122,6 @@ export default {
           this.item.lastname = response.data.lastname
           this.item.counter = response.data.counter
         }else{
-          console.log(this.valid);
           this.$refs.form.validate()
         }
       },
