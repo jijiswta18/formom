@@ -45,7 +45,7 @@ export default {
     font-family: 'Kanit', sans-serif;
   }
   .bg-page{
-    background-color: #e7ce67;
+    background-color: #a38bc2;
     text-align: center;
     height: auto;
     min-height: 100vh;
