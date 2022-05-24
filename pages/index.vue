@@ -2,7 +2,7 @@
   <div class="page">
     <div class="image">
       <div class="second-image">
-        <img class="w-100" src="~/assets/images/queen.png" />
+        <img class="w-100" src="~/assets/images/bg-page.jpg" />
         <div v-if="!checkForm" @click="signForm">
           <img class="box-sign" src="~/assets/images/banner01.gif"/>
         </div>
@@ -172,13 +172,13 @@ export default {
   }
   .box-sign{
     cursor: pointer;
-    /* position: absolute;
+    position: absolute;
     bottom: 10px;
     margin-left: auto;
     margin-right: auto;
     left: 0;
     right: 0;
-    text-align: center; */
+    text-align: center;
   }
   .image{
     position: relative;
