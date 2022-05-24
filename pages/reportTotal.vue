@@ -14,6 +14,7 @@
         :headers="headers"
         :items="desserts"
         :items-per-page="12"
+        :footer-props="{'items-per-page-options':[12, 30, 50, 100, -1]}"
         :search="search"
         class="elevation-1"
       ></v-data-table>
@@ -25,6 +26,7 @@
   export default {
     data () {
       return {
+       
         search: '',
         headers: [
           {
