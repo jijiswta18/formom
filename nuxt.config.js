@@ -5,7 +5,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันฉัตรมงคล วันที่ 4 พฤษภาคม 2565 | กรมบัญชีกลาง | กรมบัญชีกลาง',
+    title: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันเฉลิมพระชนมพรรษา วันที่ 28 กรกฎาคม 2565 | กรมบัญชีกลาง',
     htmlAttrs: {
       lang: 'en'
     },
@@ -32,6 +32,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/vue-excel-xlsx.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -48,7 +49,8 @@ export default {
     '@nuxtjs/axios',
   ],
   axios:{
-    baseURL: 'https://forking.cgd.go.th/', // Used as fallback if no runtime config is provided
+    // baseURL: 'https://forking.cgd.go.th/', // Used as fallback if no runtime config is provided
+    baseURL: 'http://10.100.90.24:5000'
     // proxy: false
   },
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
