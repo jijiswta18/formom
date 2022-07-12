@@ -2,7 +2,7 @@
   <div class="page">
     <div class="image">
       <div class="second-image">
-        <img class="w-100" src="~/assets/images/bg-page.jpg" />
+        <img class="w-100" src="~/assets/images/forking.jpg" />
         <!-- <div v-if="!checkForm" @click="signForm">
           <img class="box-sign" src="~/assets/images/banner01.gif"/>
         </div> -->

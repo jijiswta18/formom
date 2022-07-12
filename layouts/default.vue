@@ -45,13 +45,17 @@ export default {
     font-family: 'Kanit', sans-serif;
   }
   .bg-page{
-    background-color: #e7ce67;
+    background-image: url("~/assets/images/bg-page.jpg");
+    /* background-color: #e7ce67; */
     text-align: center;
     height: auto;
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+        background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
   }
   html{
    height: 100%;
