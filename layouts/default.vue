@@ -50,10 +50,10 @@ export default {
     text-align: center;
     height: auto;
     min-height: 100vh;
-    /* display: flex; */
-    /* align-items: center; */
-    /* justify-content: center; */
-        background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
   }
