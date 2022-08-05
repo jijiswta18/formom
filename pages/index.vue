@@ -105,7 +105,7 @@ export default {
       this.getBrowserDetect();
     },
     methods: {
-      submit: async function(){
+      async submit(){
       
         if(this.p_name && this.p_lastname && this.valid){
           this.checkSubmit = true
@@ -117,7 +117,10 @@ export default {
             "browser" : this.browser,
             "device" : this.device,
           }
+
           const response = await this.$axios.$post('/api/for-king', fd) 
+
+          // console.log(response);
           this.item.name = response.data.name
           this.item.lastname = response.data.lastname
           this.item.counter = response.data.counter
@@ -200,22 +203,22 @@ export default {
     color: red!important;
   }
    .btn-home{
-    background-color: #7c4b0b!important;
+    background-color: #0099dc!important;
     color: white;
     margin-right: 0.5rem;
     font-weight: 300;
   }
    .btn-print{
     background-color: white!important;
-    border: 1px solid #7c4b0b!important;
-    color: #7c4b0b;
+    border: 1px solid #0099dc!important;
+    color: #0099dc;
     font-weight: 400;
    
   }
   .style-title{
     font-weight: 400;
     margin: 2rem 0 1rem 0;
-    color: #5f4303;
+    color: #060a7c;
   }
   .style-xs{
     display: none;
@@ -223,11 +226,11 @@ export default {
   .style-name{
    margin: 2rem 0 1rem 0;
    font-weight: 400;
-   color: #5f4303;
+   color: #060a7c;
   }
 
   .style-number{
-    color: #5f4303;
+    color: #060a7c;
     font-size: 20px;
   }
   
@@ -270,7 +273,7 @@ export default {
     }
     .style-xs{
       display: block;
-      color: #5f4303;
+      color: #060a7c;
       margin: 2rem 0 1rem 0;
     }
     .style-xs h2{
