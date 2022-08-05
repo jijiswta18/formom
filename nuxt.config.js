@@ -5,7 +5,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันเฉลิมพระชนมพรรษา วันที่ 28 กรกฎาคม 2565 | กรมบัญชีกลาง',
+    title: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันเฉลิมพระชนมพรรษา วันที่ 12 สิงหาคม 2565 | กรมบัญชีกลาง',
     htmlAttrs: {
       lang: 'en'
     },
@@ -14,7 +14,7 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'og-description', name: 'description', content: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันเฉลิมพระชนมพรรษา วันที่ 28 กรกฎาคม 2565 | กรมบัญชีกลาง' },
+      { hid: 'og-description', name: 'description', content: 'ลงนามถวายพระพรออนไลน์ เนื่องในวันเฉลิมพระชนมพรรษา วันที่ 12 สิงหาคม 2565 | กรมบัญชีกลาง' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [

@@ -2,7 +2,7 @@
   <div class="page">
     <div class="image">
       <div class="second-image">
-        <img class="w-100" src="~/assets/images/forking.jpg" />
+        <img class="w-100" src="~/assets/images/formom.jpg" />
         <!-- <div v-if="!checkForm" @click="signForm">
           <img class="box-sign" src="~/assets/images/banner01.gif"/>
         </div> -->
@@ -243,6 +243,15 @@ export default {
     text-align: left;
     color: red;
   }
+  .second-image{
+    width: 700px;
+    height: 600px;
+    margin: auto;
+  }
+  .second-image img{
+    width: 100%;
+  }
+
   @media print {
     .box-footer{
       display: none;
