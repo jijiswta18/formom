@@ -49,7 +49,7 @@ export default {
     '@nuxtjs/axios',
   ],
   axios:{
-    baseURL: 'https://forking.cgd.go.th/', // Used as fallback if no runtime config is provided
+    // baseURL: 'https://forking.cgd.go.th/', // Used as fallback if no runtime config is provided
     baseURL: 'http://10.100.90.24/'
     // proxy: false
   },
